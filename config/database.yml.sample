@@ -1,0 +1,26 @@
+default: &default
+  adapter: mysql2
+  pool: 5
+  timeout: 5000
+  encoding: utf8
+  reconnect: true
+  host: localhost
+  port: 3306
+
+development:
+  <<: *default
+  database: "feed_reader_development"
+  username: "username"
+  password: "password"
+
+test:
+  <<: *default
+  database: "feed_reader_test"
+  username: "username"
+  password: "password"
+
+production:
+  <<: *default
+  database: "feed_reader_production"
+  username: "username"
+  password: "password"
