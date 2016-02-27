@@ -1,4 +1,5 @@
-.mtp-50{
+.mtp-50
+{
   margin-top:50px;
 }
 .mtp-5{
@@ -9,4 +10,11 @@
   max-width: 330px;
   padding: 15px;
   margin: 0 auto;
+}
+p.pagination_link
+{
+  text-align: center;
+  border: 1px solid grey;
+  padding: 5px;
+  }
 }

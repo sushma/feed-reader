@@ -1,8 +1,8 @@
 .mtp-50
   -if flash[:error]
-    .alert.alert-danger{:role => "alert"}
+    .alert.alert-danger{role: "alert"}
       = flash[:error]
   -if alert
-    .alert.alert-success{:role => "alert"}
-    =notice
-  =alert
+    .alert.alert-success{role: "alert"}
+    = notice
+  = alert

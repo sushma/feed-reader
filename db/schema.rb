@@ -11,7 +11,16 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160227052831) do
+ActiveRecord::Schema.define(version: 20160227130651) do
+
+  create_table "rss_feeds", force: :cascade do |t|
+    t.text     "title",        limit: 65535
+    t.datetime "published_at"
+    t.text     "summary",      limit: 65535
+    t.string   "url",          limit: 255
+    t.datetime "created_at",                 null: false
+    t.datetime "updated_at",                 null: false
+  end
 
   create_table "users", force: :cascade do |t|
     t.string   "name",            limit: 255
