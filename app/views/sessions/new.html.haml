@@ -1,0 +1,7 @@
+=form_tag '/login', class: 'form-signin' do
+  %h2.form-signin-heading Please sign in
+  %label.sr-only{:for => "inputEmail"} Email address
+  = email_field_tag :email, '' ,{class: 'form-control', id: 'inputEmail', placeholder: "Email address"}
+  %label.sr-only{:for => "inputPassword"} Password
+  = password_field_tag :password, '', {class: 'form-control mtp-5', id: 'inputPassword', placeholder: "Password", autocomplete: 'off'}
+  %button.btn.btn-lg.btn-primary.btn-block.mtp-5{:type => "submit"} Sign in
