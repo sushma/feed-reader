@@ -1,0 +1,4 @@
+-if @comments.empty?
+    $("#comments_#{@rss_feed.id}").html("<p>Be the first to add comment.</p>");
+-else
+    $("#comments_#{@rss_feed.id}").html("#{j(render @comments)}");

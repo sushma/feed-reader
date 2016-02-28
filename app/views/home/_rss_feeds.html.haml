@@ -1,7 +1,0 @@
--@rss_feeds.each do |feed|
-  .col
-    %h2= feed.title
-    %p= "Posted: #{format_date feed.published_at}"
-    %p
-      = feed.summary
-      = link_to 'more', feed.url

@@ -1,0 +1,17 @@
+%li
+  .comment
+    = comment.body
+    %br
+    %small= "#{time_ago_in_words(comment.created_at) } ago"
+    -if logged_in?
+      .reply_box
+        -if logged_in?   
+          = form_for [comment.rss_feed, comment, Comment.new] do |f|
+            = render "comments/form", f: f, placeholder: "Add a reply"
+  %ul.mlt-50
+    -comment.replies.each do |reply|
+      %li
+        .comment
+          = reply.body
+          %br
+          %small= "#{time_ago_in_words(reply.created_at) } ago"

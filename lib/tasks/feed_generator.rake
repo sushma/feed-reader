@@ -1,5 +1,8 @@
-#rake feed_parser:get_feed
-namespace :feed_parser do
+require 'pub_sub'
+
+#rake feed_generator:get_feed
+namespace :feed_generator do
+	
   desc "Load feed from "
   task get_feed: :environment do
 		url = "http://feeds.feedburner.com/NdtvNews-TopStories?format=xml"
@@ -7,5 +10,12 @@ namespace :feed_parser do
 		entries = feed.entries.collect{|e| RssFeed.new title: e.title, published_at: e.published, summary: e.summary.gsub!(/<[^>]*>/,''), url: e.url}
 		RssFeed.import entries
   end
+	
+	desc "Initiate PubSub connection"
+	task connect_to_hub: :environment do
+		pubsub = PubSub.new(RSS_URL)
+		pubsub.subscribe
+		logger.info "Request failed: #{pubsub.error}" if pubsub.error
+	end
 
 end

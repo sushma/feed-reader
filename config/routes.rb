@@ -3,8 +3,8 @@ Rails.application.routes.draw do
   # See how all your routes lay out with "rake routes".
 
   # You can have the root of your site routed with "root"
-  root 'home#index'
-
+  #root 'rss_feeds#index'
+  root to: 'pub_subs#index'
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'
 	
@@ -15,6 +15,15 @@ Rails.application.routes.draw do
 	post '/users' => 'users#create'
 	
 	resources :users, only: [:edit, :update]
+	resources :rss_feeds, only: [:index] do
+		resources :comments, only: [:index, :create] do
+	    resources :comments, only: [:create]
+	  end
+	end
+	
+	resources :pub_subs
+	match 'pub_subs/callback', :as => :pubsub_callback, via: [:get, :post]
+	
   # Example of named route that can be invoked with purchase_url(id: product.id)
   #   get 'products/:id/purchase' => 'catalog#purchase', as: :purchase
 
