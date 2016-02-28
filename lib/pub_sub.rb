@@ -6,7 +6,7 @@ class PubSub
 	
 	def initialize(feed_url)
 		@feed_url = feed_url
-		@hub_url = hub_ur2
+		@hub_url = hub_url
 		@error = nil
 	end
 	
@@ -14,7 +14,7 @@ class PubSub
   # has one. A hub URL is indicated by <link rel="hub"> in the feed.
   def hub_url
     feed = Nokogiri::XML(open(@feed_url))
-    (hub = feed.xpath("//*[@rel='hub']")).present? ? hub.attribute("href").text : nil
+    feed.xpath("//*[@rel='hub']").present? ? hub.attribute("href").text : nil
   end
 	
 	def verify_hub(response_params)
