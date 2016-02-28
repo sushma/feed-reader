@@ -20,13 +20,6 @@ class PubSub
       nil
     end
   end
-	
-	def verify_hub(params)
-			(return @error = "No challenge provided.") unless params['hub.challenge'].present?
-			(return @error = "Hub responded with invalid hub topic and/or verify token") if params['hub.topic'] != @feed_url
-			(return @error = "Hub responded with unknown hub.mode: #{params['hub.mode']}") if ['subscribe', 'unsubscribe'].includes?params['hub.mode']	
-	    logger.info "RESPONDING WITH CHALLENGE: #{params['hub.challenge']}"
-	end
 
 	def subscribe
 		perform_request('subscribe')

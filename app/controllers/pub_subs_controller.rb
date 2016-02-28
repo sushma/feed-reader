@@ -1,13 +1,12 @@
 require 'pub_sub'
 
-class PubSubsController < ApplicationController
-  
-	skip_before_action :authorize
-			
+class PubSubsController < ActionController::Base
+  			
 	# Handles responses from Hub servers
 	  def callback    
 	    case request.method
-	    when "GET" then verify_hub # hub is trying to verify a new request
+	    when "GET" # hub is trying to verify a new request
+				respond_to {|format| format.html{ render text: params['hub.challenge']  }} 
 	    when "POST" then update_pub_sub # hub is updating us with a new post
 	    else
 	      respond_to {|format| format.html{ render text: "Unsupported Request", status: 405 }}
@@ -22,16 +21,4 @@ class PubSubsController < ApplicationController
 	    respond_to {|format| format.html { render text: "OK", status: 200 }}
 	  end
   
-	  def verify_hub
-			pubsub = PubSub.new(RSS_URL)
-			pubsub.verify_hub(params)
-			respond_to do |format|
-				if pubsub.error.blank?
-				  format.html { render text: params['hub.challenge'] }
-				else
-	        format.html {render text: "Error: #{pubsub.error}", status: 404}
-				end
-			end
-	  end
-		
 end
