@@ -21,17 +21,13 @@ class PubSub
     end
   end
 	
-	def verify_hub(response_params)
-    begin
-			raise "Error: No challenge provided." unless params['hub.challenge'].present?
-			raise "Error: Hub responded with invalid hub topic and/or verify token" if params['hub.topic'] != @feed_url
-			raise "Error: Hub responded with unknown hub.mode: #{params['hub.mode']}" if ['subscribe', 'unsubscribe'].includes?params['hub.mode']	
-	    logger.info "RESPONDING WITH CHALLENGE: #{challenge}"
-		rescue e
-			@error = e.message
-		end
+	def verify_hub(params)
+			(return @error = "No challenge provided.") unless params['hub.challenge'].present?
+			(return @error = "Hub responded with invalid hub topic and/or verify token") if params['hub.topic'] != @feed_url
+			(return @error = "Hub responded with unknown hub.mode: #{params['hub.mode']}") if ['subscribe', 'unsubscribe'].includes?params['hub.mode']	
+	    logger.info "RESPONDING WITH CHALLENGE: #{params['hub.challenge']}"
 	end
-	
+
 	def subscribe
 		perform_request('subscribe')
 	end
@@ -46,8 +42,7 @@ class PubSub
 	
 	#Request type is subscribe or unsubscribe
 	def perform_request(request_type)
-		begin
-			railse "Error: Doesn't seem to contain a valid RSS / Atom feed or its feed has no hub specified." unless @hub_url
+			(return @error= "Error: Doesn't seem to contain a valid RSS / Atom feed or its feed has no hub specified.") unless @hub_url
       params = {
         'hub.topic'         => @feed_url,
         'hub.mode'          => request_type,
@@ -55,11 +50,6 @@ class PubSub
         'hub.verify'        => 'async'
       }
 			send_request(@hub_url, params)
-		rescue e
-			logger.info "RESPONSE: #{e.response}"
-      # subscription request was received
-			@error = "Seems invalid. Hub wouldn't take #{request_type} request. #{e.response.inspect}" if e.response.code.to_i != 204 
-		end
 	end
 	
 	def send_request(url, params)

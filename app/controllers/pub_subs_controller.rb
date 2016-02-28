@@ -24,12 +24,12 @@ class PubSubsController < ApplicationController
   
 	  def verify_hub
 			pubsub = PubSub.new(RSS_URL)
-			pubsub.verify_hub
+			pubsub.verify_hub(params)
 			respond_to do |format|
 				if pubsub.error.blank?
 				  format.html { render text: params['hub.challenge'] }
 				else
-	        format.html {render text: "No challenge provided.", status: 404}
+	        format.html {render text: "Error: #{pubsub.error}", status: 404}
 				end
 			end
 	  end
