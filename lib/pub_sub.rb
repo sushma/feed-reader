@@ -47,7 +47,7 @@ class PubSub
       params = {
         'hub.topic'         => @feed_url,
         'hub.mode'          => request_type,
-        'hub.callback'      => "http://feed_reader.herokuapp.com/pub_subs/callback",
+        'hub.callback'      => "https://feed-parser.herokuapp.com/pub_subs/callback",
         'hub.verify'        => 'async'
       }
 			send_request(@hub_url, params)
