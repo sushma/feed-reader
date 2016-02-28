@@ -14,7 +14,11 @@ class PubSub
   # has one. A hub URL is indicated by <link rel="hub"> in the feed.
   def hub_url
     feed = Nokogiri::XML(open(@feed_url))
-    feed.xpath("//*[@rel='hub']").present? ? hub.attribute("href").text : nil
+		if (hub = feed.xpath("//*[@rel='hub']")).present?
+      hub.attribute("href").text
+    else
+      nil
+    end
   end
 	
 	def verify_hub(response_params)
