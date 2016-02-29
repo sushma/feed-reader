@@ -17,7 +17,7 @@
           %a.navbar-brand{href: root_path} Feed Reader
         #navbar.collapse.navbar-collapse
           %ul.nav.navbar-nav
-            -if current_user
+            -if logged_in?
               %li
                 = link_to current_user.name, edit_user_path(current_user)
               %li

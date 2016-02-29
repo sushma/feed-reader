@@ -2,7 +2,7 @@
 #rss_feeds.mtp-50
   = render @rss_feeds
 -unless @rss_feeds.blank?
-  %p.pagination_link= link_to 'Load Older feeds', root_path(page: params[:page].to_i.succ), remote: true, id: "load_more_link"
+  %p.mtp-5.pagination_link= link_to 'Load Older feeds', root_path(page: params[:page].to_i.succ), remote: true, id: "load_more_link"
 
 :javascript
   
