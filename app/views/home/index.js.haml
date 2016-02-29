@@ -1,5 +1,5 @@
 -if @rss_feeds.empty?
     $('#load_more_link').replaceWith("No older feed to show.");
 -else
-    $('#rss_feeds').append("#{j(render 'rss_feeds')}");
+    $('#rss_feeds').append("#{j(render @rss_feeds)}");
     $('#load_more_link').replaceWith("#{j(link_to 'Load Older feeds', root_path(page: params[:page].to_i.succ), remote: true, id: 'load_more_link')}");

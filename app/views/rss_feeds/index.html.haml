@@ -1,6 +1,15 @@
 %h1="NDTV Top Stories"
 #rss_feeds.mtp-50
   = render @rss_feeds
-%p.pagination_link= link_to 'Load Older feeds', root_path(page: params[:page].to_i.succ), remote: true, id: "load_more_link"
+-unless @rss_feeds.blank?
+  %p.pagination_link= link_to 'Load Older feeds', root_path(page: params[:page].to_i.succ), remote: true, id: "load_more_link"
+
+:javascript
+  
+  var Message = new Entangled('ws://localhost:3000/messages');
+  Message.all(function(err, messages) {
+    console.log(messages);
+    console.log(messages[messages.length - 1]);
+  });
 
   

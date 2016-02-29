@@ -1,4 +1,5 @@
 class CommentsController < ApplicationController
+	before_action :authorize, only: [:create]
 	before_action :get_rss_feed
 		
 		

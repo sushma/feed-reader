@@ -17,9 +17,7 @@ class PubSubHandler
           Rack::Response.new("not valid", 404).finish
         end
 			when 'POST'
-        rss_feeds = PubSub.build_rss_feed_hash(request.body.read)			
-		    RssFeed.import rss_feeds
-				Rails.logger.info content
+        RssFeed.populate_from_xml(request.body.read)			
 				Rack::Response.new("Thanks!", 200).finish
 			end
 		else

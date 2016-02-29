@@ -4,10 +4,10 @@
   %p
     = rss_feed.summary
     = link_to 'more', rss_feed.url, target: 'blank'
-.comment_box
-  = link_to "#{rss_feed.comments.size} comments", rss_feed_comments_path(rss_feed), remote: true
-  -if logged_in?   
-    = form_for [rss_feed, Comment.new] do |f|
-      = render "comments/form", f: f, placeholder: "Write a comment.."  
+  .comment_box
+    = link_to "#{rss_feed.comments.size} comments", rss_feed_comments_path(rss_feed), remote: true
+    -if logged_in?   
+      = form_for [rss_feed, Comment.new] do |f|
+        = render "comments/form", f: f, placeholder: "Write a comment.."  
          
-  %ul.comments{id: "comments_#{rss_feed.id}"}
+    %ul.comments{id: "comments_#{rss_feed.id}"}

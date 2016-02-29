@@ -3,7 +3,7 @@ Rails.application.routes.draw do
   # See how all your routes lay out with "rake routes".
 
   # You can have the root of your site routed with "root"
-  root 'rss_feeds#index'
+  root 'home#index'
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'
 	
@@ -20,6 +20,7 @@ Rails.application.routes.draw do
 	  end
 	end
 	
+	sockets_for :rss_feeds, only: :index
 	#match 'pub_subs/callback', :as => :pubsub_callback, via: [:get, :post]
 	
 	
