@@ -5,7 +5,7 @@ class PubSubsController < ActionController::Base
 	# Handles responses from Hub servers
 	  def callback    
 	    case request.method
-	    when "GET" # hub is trying to verify a new request
+	    when "GET" # hub is trying to verify a new request			
 				respond_to {|format| format.html{ render text: params['hub.challenge']  }} 
 	    when "POST" then update_pub_sub # hub is updating us with a new post
 	    else
@@ -17,7 +17,10 @@ class PubSubsController < ActionController::Base
   
 	  def update_pub_sub
 			logger.info "NEW RESPONSE FROM HUB"
+			logger.error params
+			logger.info params
 	    logger.info request.body.read
+			logger.error request.body.read
 	    respond_to {|format| format.html { render text: "OK", status: 200 }}
 	  end
   
