@@ -28,7 +28,7 @@ class PubSub
 	
 	def self.build_rss_feed_hash(content)
 		xml_feeds = Nokogiri.XML(content)
-		rss_feeds = xml_feeds.xpath("//item").collect{|item| RssFeed.new title: item.search('title').text, summary: item.search('title').text.gsub!(/<[^>]*>/,''), published_at: item.search('pubDate').text, url: item.search('link').text}
+		rss_feeds = xml_feeds.xpath("//item").collect{|item| RssFeed.new title: item.search('title').text, summary: item.search('title').text.gsub!(/<[^>]*>/,''), published_at: item.search('pubDate').text.to_datetime, url: item.search('link').text}
 	end
 	
 	##########

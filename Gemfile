@@ -27,11 +27,11 @@ gem 'sdoc', '~> 0.4.0', group: :doc
  gem 'haml'
  gem 'feedjira'
  gem 'activerecord-import-rails4', '~> 0.5.0'
- #gem 'entangled'
+ gem 'entangled'
 
 # Use Unicorn as the app server
 # gem 'unicorn'
-#gem 'puma'
+gem 'puma'
 
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development

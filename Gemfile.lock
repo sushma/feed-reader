@@ -39,6 +39,7 @@ GEM
       thread_safe (~> 0.3, >= 0.3.4)
       tzinfo (~> 1.1)
     arel (6.0.3)
+    awrence (0.1.0)
     bcrypt (3.1.10)
     binding_of_caller (0.7.2)
       debug_inspector (>= 0.0.1)
@@ -54,6 +55,12 @@ GEM
     concurrent-ruby (1.0.0)
     debug_inspector (0.0.2)
     diff-lcs (1.2.5)
+    entangled (1.5.0)
+      awrence (~> 0.1)
+      plissken (~> 0.2)
+      rails (~> 4.0)
+      redis (~> 3.2)
+      tubesock (~> 0.2)
     erubis (2.7.0)
     execjs (2.6.0)
     faraday (0.9.2)
@@ -90,6 +97,9 @@ GEM
     mysql2 (0.4.3)
     nokogiri (1.6.7.2)
       mini_portile2 (~> 2.0.0.rc2)
+    plissken (0.2.0)
+      symbolize (~> 4.2)
+    puma (3.0.2)
     rack (1.6.4)
     rack-test (0.6.3)
       rack (>= 1.0)
@@ -120,6 +130,7 @@ GEM
     rake (10.5.0)
     rdoc (4.2.2)
       json (~> 1.4)
+    redis (3.2.2)
     rspec-core (3.3.2)
       rspec-support (~> 3.3.0)
     rspec-expectations (3.3.1)
@@ -156,9 +167,16 @@ GEM
       actionpack (>= 4.0)
       activesupport (>= 4.0)
       sprockets (>= 3.0.0)
+    symbolize (4.5.2)
+      activemodel (>= 3.2, < 5)
+      activesupport (>= 3.2, < 5)
+      i18n
     thor (0.19.1)
     thread_safe (0.3.5)
     tilt (2.0.2)
+    tubesock (0.2.5)
+      rack (>= 1.5.0)
+      websocket (>= 1.1.0)
     tzinfo (1.2.2)
       thread_safe (~> 0.1)
     uglifier (2.7.2)
@@ -169,6 +187,7 @@ GEM
       binding_of_caller (>= 0.7.2)
       railties (>= 4.0)
       sprockets-rails (>= 2.0, < 4.0)
+    websocket (1.2.2)
 
 PLATFORMS
   ruby
@@ -178,11 +197,13 @@ DEPENDENCIES
   bcrypt (~> 3.1.7)
   byebug
   coffee-rails (~> 4.1.0)
+  entangled
   feedjira
   haml
   jbuilder (~> 2.0)
   jquery-rails
   mysql2
+  puma
   rails (= 4.2.5.1)
   rspec-rails
   sass-rails (~> 5.0)
