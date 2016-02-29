@@ -13,9 +13,9 @@ namespace :feed_generator do
 	
 	desc "Initiate PubSub connection"
 	task connect_to_hub: :environment do
-		pubsub = PubSub.new(RSS_URL)
+		pubsub = PubSub.new(RSS_URL, CALLBACK_URL)
 		pubsub.subscribe
-		logger.info "Request failed: #{pubsub.error}" if pubsub.error
+		logger.error "Request failed: #{pubsub.error}" if pubsub.error
 	end
 
 end

@@ -4,8 +4,9 @@ class PubSub
 		
 	attr_reader :error
 	
-	def initialize(feed_url)
+	def initialize(feed_url, callback_url)
 		@feed_url = feed_url
+		@callback_url = callback_url
 		@hub_url = hub_url
 		@error = nil
 	end
@@ -25,8 +26,17 @@ class PubSub
 		perform_request('subscribe')
 	end
 	
-	def unsubscribe
-		perform_request('unsubscribe')
+	def self.build_rss_feed_hash(content)
+		content = Nokogiri.XML(content)
+		rss_feeds = []
+		content.xpath("//item").each do |item|
+			rss_feeds << {title: item.search('title').text, 
+				summary: item.search('title').text.gsub!(/<[^>]*>/,''),
+				published_at: item.search('pubDate').text,
+				url: item.search('link').text
+			}
+		end
+		rss_feeds
 	end
 	
 	##########
@@ -39,7 +49,7 @@ class PubSub
       params = {
         'hub.topic'         => @feed_url,
         'hub.mode'          => request_type,
-        'hub.callback'      => "https://feed-parser.herokuapp.com/pub_subs/callback",
+        'hub.callback'      => @callback_url,
         'hub.verify'        => 'async'
       }
 			send_request(@hub_url, params)
