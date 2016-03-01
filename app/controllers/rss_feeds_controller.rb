@@ -2,33 +2,35 @@ class RssFeedsController < ApplicationController
 	include ActionController::Live	 
 	 
 	def index
-		 @rss_feeds = RssFeed.order(published_at: :desc).limit(5).offset(get_offset(params[:page] ||= 1))
-		 respond_to do |format|
-	      format.html
-	      format.js 
-	   end
+		@rss_feeds = RssFeed.order(published_at: :desc).limit(5).offset(get_offset(params[:page] ||= 1))
+		respond_to do |format|
+			format.html
+			format.js 
+		end
 	end
 	 
-  def events
-	  # SSE expects the `text/event-stream` content type
-    response.headers['Content-Type'] = 'text/event-stream'
+	def events
+		# SSE expects the `text/event-stream` content type
+		response.headers['Content-Type'] = 'text/event-stream'
 		sse = SSE.new(response.stream, retry: 300, event: "refresh")
-    begin
+		begin
+			#logger.info "*" * 50
 			RssFeed.notify_rss_feed_creation do |feed_id|
-			 sse.write({feed_id: feed_id})
+				sse.write({feed_id: feed_id})
 			end
-    rescue IOError
-      # When the client disconnects, we'll get an IOError on write
-    ensure
-      sse.close
-    end
-  end
+			#Hack for deployment on heroku as it has a request timeout set to 30 sec
+		rescue IOError
+			# When the client disconnects, we'll get an IOError on write
+		ensure
+			sse.close
+		end
+	end
 	
 	def show
-	  @rss_feed = RssFeed.find(params[:id])
-	  respond_to do |format|
-      format.js 
-    end
+		@rss_feed = RssFeed.find(params[:id])
+		respond_to do |format|
+			format.js 
+		end
 	end
 	
 	########
@@ -36,11 +38,11 @@ class RssFeedsController < ApplicationController
 	########
 
 	def get_offset(page)
-	  case page.to_i
+		case page.to_i
 		when 1 then 0
 		when 2 then 5
-	  else
-	    page.to_i.pred * 5
+		else
+			page.to_i.pred * 5
 		end
 	end
  

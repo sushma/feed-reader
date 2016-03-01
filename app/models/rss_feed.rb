@@ -13,11 +13,10 @@ class RssFeed < ActiveRecord::Base
 	
 	def self.notify_rss_feed_creation
 	  RssFeed.connection.execute "LISTEN rss_feeds_channel"
-	  loop do
-	    RssFeed.connection.raw_connection.wait_for_notify do |event, pid, rss_feed|
-	      yield rss_feed
-	    end
-	  end
+		start_time = Time.current
+    RssFeed.connection.raw_connection.wait_for_notify(20) do |event, pid, rss_feed_id|
+      yield rss_feed_id
+    end
 	ensure
 	  RssFeed.connection.execute "UNLISTEN rss_feeds_channel"
 	end
