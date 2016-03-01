@@ -4,6 +4,6 @@ class Comment < ActiveRecord::Base
 	has_many :replies, class_name: "Comment", foreign_key: "parent_id"
 	
 	validates :body, presence: true
-	validates_associated :rss_feed
+	validates :rss_feed, presence: true
 	
 end
