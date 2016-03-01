@@ -7,8 +7,8 @@ setTimeout((function() {
 }), 1);
 function getFeed(feed_id){
   $.ajax({
-  url: "rss_feeds/" + feed_id,
-  type: 'GET',
-  dataType: 'script'
+    url: "rss_feeds/" + feed_id,
+    type: 'GET',
+    dataType: 'script'
   });
 }

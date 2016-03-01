@@ -1,6 +1,6 @@
 class RssFeed < ActiveRecord::Base
 		
-	has_many :comments, -> { where parent_id: nil }
+	has_many :comments, -> { where parent_id: nil } 
 	
 	after_commit :notify_rss_feed_created, on: :create
 	
@@ -13,7 +13,7 @@ class RssFeed < ActiveRecord::Base
 	
 	def self.notify_rss_feed_creation
 	  RssFeed.connection.execute "LISTEN rss_feeds_channel"
-		start_time = Time.current
+		#Wait for notification or timeout and return nil
     RssFeed.connection.raw_connection.wait_for_notify(NOTIFY_TIMEOUT) do |event, pid, rss_feed_id|
       yield rss_feed_id
     end
