@@ -1,6 +1,6 @@
 require 'pub_sub'
 
-#rake feed_generator:connect_to_hub:
+#rake feed_generator:connect_to_hub
 namespace :feed_generator do
 	
 	desc "Initiate PubSub connection"

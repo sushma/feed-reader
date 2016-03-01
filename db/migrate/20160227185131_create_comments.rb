@@ -6,5 +6,6 @@ class CreateComments < ActiveRecord::Migration
 			t.integer :rss_feed_id
       t.timestamps null: false
     end
+		add_index :comments, :parent_id, :rss_feed_id
   end
 end

@@ -3,7 +3,7 @@ Rails.application.routes.draw do
   # See how all your routes lay out with "rake routes".
 
   # You can have the root of your site routed with "root"
-  root 'home#index'
+  root 'rss_feeds#index'
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'
 	
@@ -15,7 +15,7 @@ Rails.application.routes.draw do
 	post '/users' => 'users#create'
 	
 	resources :users, only: [:edit, :update]
-	resources :rss_feeds, only: [:show] do
+	resources :rss_feeds, only: [:index,:show] do
 		resources :comments, only: [:index, :create] do
 	    resources :comments, only: [:create]
 	  end
