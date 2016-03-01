@@ -14,7 +14,7 @@ class RssFeed < ActiveRecord::Base
 	def self.notify_rss_feed_creation
 	  RssFeed.connection.execute "LISTEN rss_feeds_channel"
 		start_time = Time.current
-    RssFeed.connection.raw_connection.wait_for_notify(20) do |event, pid, rss_feed_id|
+    RssFeed.connection.raw_connection.wait_for_notify(NOTIFY_TIMEOUT) do |event, pid, rss_feed_id|
       yield rss_feed_id
     end
 	ensure
