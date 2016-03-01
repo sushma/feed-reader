@@ -7,6 +7,7 @@ Rails.application.routes.draw do
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'
 	
+	
 	get '/login' => 'sessions#new'
 	post '/login' => 'sessions#create'
   get '/logout' => 'sessions#destroy'
@@ -14,13 +15,13 @@ Rails.application.routes.draw do
 	post '/users' => 'users#create'
 	
 	resources :users, only: [:edit, :update]
-	resources :rss_feeds, only: [:index] do
+	resources :rss_feeds, only: [:show] do
 		resources :comments, only: [:index, :create] do
 	    resources :comments, only: [:create]
 	  end
 	end
+	get '/events', to: 'rss_feeds#events'
 	
-	sockets_for :rss_feeds, only: :index
 	#match 'pub_subs/callback', :as => :pubsub_callback, via: [:get, :post]
 	
 	

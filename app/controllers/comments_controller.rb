@@ -6,7 +6,6 @@ class CommentsController < ApplicationController
 	def index
 		@comments = @rss_feed.comments.includes(:replies)
 		 respond_to do |format|
-	      format.html
         format.js 
      end
 	end
@@ -14,9 +13,10 @@ class CommentsController < ApplicationController
 	def create
 		@comment = @rss_feed.comments.new(comment_params)
 		@comment.parent_id = params[:comment_id]
-		return redirect_to :back, notice: "Your comment wasn't posted!" unless @comment.valid?
 		@comment.save
-		redirect_to :back, notice: 'Your comment was successfully posted!'
+	 respond_to do |format|
+       format.js 
+    end
   end
 	
 	########

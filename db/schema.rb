@@ -13,30 +13,33 @@
 
 ActiveRecord::Schema.define(version: 20160228100947) do
 
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
+
   create_table "comments", force: :cascade do |t|
-    t.text     "body",        limit: 65535
-    t.integer  "parent_id",   limit: 4
-    t.integer  "rss_feed_id", limit: 4
-    t.datetime "created_at",                null: false
-    t.datetime "updated_at",                null: false
+    t.text     "body"
+    t.integer  "parent_id"
+    t.integer  "rss_feed_id"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
   end
 
   create_table "rss_feeds", force: :cascade do |t|
-    t.text     "title",          limit: 65535
+    t.text     "title"
     t.datetime "published_at"
-    t.text     "summary",        limit: 65535
-    t.string   "url",            limit: 255
-    t.datetime "created_at",                               null: false
-    t.datetime "updated_at",                               null: false
-    t.integer  "comments_count", limit: 4,     default: 0
+    t.text     "summary"
+    t.string   "url"
+    t.datetime "created_at",                 null: false
+    t.datetime "updated_at",                 null: false
+    t.integer  "comments_count", default: 0
   end
 
   create_table "users", force: :cascade do |t|
-    t.string   "name",            limit: 255
-    t.string   "email",           limit: 255
-    t.string   "password_digest", limit: 255
-    t.datetime "created_at",                  null: false
-    t.datetime "updated_at",                  null: false
+    t.string   "name"
+    t.string   "email"
+    t.string   "password_digest"
+    t.datetime "created_at",      null: false
+    t.datetime "updated_at",      null: false
   end
 
 end

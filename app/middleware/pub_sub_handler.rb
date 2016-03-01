@@ -7,7 +7,7 @@ class PubSubHandler
 
   def call(env)	
     request = Rack::Request.new(env)	
-		if env["PATH_INFO"] == URI.parse(CALLBACK_URL).path
+		if env["PATH_INFO"] == CALLBACK_PATH
 			case env['REQUEST_METHOD']
 			when 'GET'
 				Rails.logger.info RSS_URL

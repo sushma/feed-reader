@@ -3,19 +3,3 @@
   = render @rss_feeds
 -unless @rss_feeds.blank?
   %p.mtp-5.pagination_link= link_to 'Load Older feeds', root_path(page: params[:page].to_i.succ), remote: true, id: "load_more_link"
-
-:javascript
-  
-  var RssFeed = new Entangled('ws://localhost:3000/rss_feeds');
-  RssFeed.all(function(err, rss_feeds) {
-    var rss_feed = rss_feeds[rss_feeds.length - 1];
-    if(rss_feed){
-      var feed = document.createElement("div");
-      feed.className = 'col';
-      $("#rss_feeds").prepend(feed);
-      
-      $("#rss_feeds .col:first-child").html("<h2>"+ rss_feed['title'] + "</h2><p>" + rss_feed.published_at + "</p><p>" + rss_feed['summary'] + "<a target='blank' href='" + rss_feed['url'] + "'> more</a></p><div class='comment_box'><a data-remote='true' href='/rss_feeds/" + rss_feed['id'] + "/comments'>0 comments</a><ul class='comments' id='comments_" +rss_feed['id'] +"'></ul></div>");  
-    }
-  });
-
-  

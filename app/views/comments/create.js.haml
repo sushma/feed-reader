@@ -1,0 +1,11 @@
+-if @comment.errors.any?
+  alert("#{@comment.errors.full_messages.join('\n')}");
+-else
+  -if @comment.parent_id
+    $("#comment_#{@comment.parent_id}_reply")[0].reset();
+    $("#comment_#{@comment.parent_id}_replies").append("#{j(render @comment)}");
+  -else
+    $("#rss_feed_#{@rss_feed.id}_comment")[0].reset();
+    $("#feed_#{@rss_feed.id}_comments").append("#{j(render @comment)}");
+
+  $("#cmt_cnt_#{@rss_feed.id}").html("#{@rss_feed.comments_count} comments");

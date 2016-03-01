@@ -80,3 +80,4 @@ Rails.application.configure do
   config.active_record.dump_schema_after_migration = false
 	
 end
+HOST = "https://feed-parser.herokuapp.com"
