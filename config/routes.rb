@@ -15,7 +15,10 @@ Rails.application.routes.draw do
 	post '/users' => 'users#create'
 	
 	resources :users, only: [:edit, :update]
-	resources :rss_feeds, only: [:index,:show] do
+	resources :rss_feeds, only: [:index] do
+		collection do 
+			get "recent"
+		end
 		resources :comments, only: [:index, :create] do
 	    resources :comments, only: [:create]
 	  end
