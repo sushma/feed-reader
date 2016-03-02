@@ -13,7 +13,7 @@ class RssFeed < ActiveRecord::Base
 		end
 	
 		def notify_rss_feed_creation
-			#RssFeed.connection.execute "LISTEN rss_feeds_channel"
+			RssFeed.connection.execute "LISTEN rss_feeds_channel"
 			#Wait for notification or timeout and return nil
 			loop do
 				RssFeed.connection.raw_connection.wait_for_notify(NOTIFY_TIMEOUT) do |event, pid, rss_feed_id|
