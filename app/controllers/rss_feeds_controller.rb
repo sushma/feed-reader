@@ -15,7 +15,6 @@ class RssFeedsController < ApplicationController
 		sse = SSE.new(response.stream, retry: 300, event: "refresh")
 		begin
 			RssFeed.notify_rss_feed_creation do |feed_id|
-				RssFeed.connection.execute "LISTEN rss_feeds_channel"
 				sse.write({feed_id: feed_id})
 			end
 		rescue IOError

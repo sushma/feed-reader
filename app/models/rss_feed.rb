@@ -2,19 +2,13 @@ class RssFeed < ActiveRecord::Base
 		
 	has_many :comments, -> { where parent_id: nil } 
 	
-	after_commit :notify_rss_feed_created, on: :create
-	
-	validates :title, presence: true
-	validates :summary, presence: true
-	validates :url, presence: true
-	validates :published_at, presence: true
+	after_save :notify_rss_feed_created, on: :create
 	
 	class << self
 		def populate_from_xml(content)
 			xml_feeds = Nokogiri.XML(content)
 			xml_feeds.xpath("//item").each do |item|
-				rss_feed = RssFeed.new(title: item.search('title').text, summary: item.search('description').text.gsub(/<[^>]*>/,''), published_at: item.search('pubDate').text.to_datetime, url: item.search('link').text)
-				rss_feed.save if rss_feed.valid?
+				RssFeed.create!(title: item.search('title').text, summary: item.search('description').text.gsub(/<[^>]*>/,''), published_at: item.search('pubDate').text.to_datetime, url: item.search('link').text)
 			end
 		end
 	
