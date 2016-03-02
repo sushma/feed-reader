@@ -2,7 +2,7 @@ class RssFeed < ActiveRecord::Base
 		
 	has_many :comments, -> { where parent_id: nil } 
 	
-	after_save :notify_rss_feed_created, on: :create
+	after_commit :notify_rss_feed_created, on: :create
 	
 	class << self
 		def populate_from_xml(content)
