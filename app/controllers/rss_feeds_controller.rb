@@ -2,7 +2,7 @@ class RssFeedsController < ApplicationController
 	include ActionController::Live	 
 	 
 	def index
-		@rss_feeds = RssFeed.order(published_at: :desc).limit(5).offset(get_offset(params[:page] ||= 1))
+		@rss_feeds = RssFeed.order(published_at: :desc).limit(10).offset(get_offset(params[:page] ||= 1))
 		respond_to do |format|
 			format.html
 			format.js 
@@ -15,6 +15,7 @@ class RssFeedsController < ApplicationController
 		sse = SSE.new(response.stream, retry: 300, event: "refresh")
 		begin
 			RssFeed.notify_rss_feed_creation do |feed_id|
+				RssFeed.connection.execute "LISTEN rss_feeds_channel"
 				sse.write({feed_id: feed_id})
 			end
 		rescue IOError
@@ -38,9 +39,9 @@ class RssFeedsController < ApplicationController
 	def get_offset(page)
 		case page.to_i
 		when 1 then 0
-		when 2 then 5
+		when 2 then 10
 		else
-			page.to_i.pred * 5
+			page.to_i.pred * 10
 		end
 	end
  
